@@ -1,0 +1,17 @@
+.navLinks {
+  display: flex;
+  gap: 12px;
+}
+
+.link {
+  text-decoration: transparent;
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.isActive {
+  color: orangered;
+}
