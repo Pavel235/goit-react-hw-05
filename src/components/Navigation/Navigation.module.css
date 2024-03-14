@@ -1,11 +1,15 @@
 .navLinks {
   display: flex;
   gap: 12px;
+  padding-top: 15px;
+  padding-left: 40px;
 }
 
 .link {
   text-decoration: transparent;
   color: black;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
 }
 
 .link:hover {

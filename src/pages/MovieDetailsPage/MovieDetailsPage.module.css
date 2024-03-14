@@ -1,0 +1,49 @@
+.movieWrapper {
+  display: flex;
+  padding: 25px;
+}
+
+.infoBox {
+  margin-left: 40px;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+}
+
+.imgElement {
+  min-width: 600px;
+}
+
+.genresList {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.genreElement {
+  list-style: none;
+  font-size: 18px;
+}
+
+.overview {
+  text-align: left;
+  font-size: 18px;
+}
+
+.filmInfo {
+  font-family: "Montserrat", sans-serif;
+  color: black;
+  font-size: 18px;
+  text-align: left;
+  padding-left: 25px;
+}
+
+.listItem {
+  color: blue;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.listElement {
+  text-align: left;
+}
