@@ -1,0 +1,13 @@
+.actorInfo {
+  text-align: left;
+}
+
+.actorPhoto {
+  width: 150px;
+}
+
+.textInfo {
+  font-family: "Montseratt", sans-serif;
+  color: black;
+  font-size: 18px;
+}
