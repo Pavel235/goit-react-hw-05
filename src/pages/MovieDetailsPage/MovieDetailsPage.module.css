@@ -7,6 +7,7 @@
   margin-left: 40px;
   color: black;
   font-family: "Montserrat", sans-serif;
+  text-align: center;
 }
 
 .imgElement {
@@ -40,11 +41,32 @@
 .listItem {
   color: blue;
   font-family: "Montserrat", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   text-decoration: underline;
 }
 
 .listElement {
   text-align: left;
+}
+
+.backButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  margin-left: 40px;
+  margin-top: 15px;
+  font-weight: 500;
+  width: 90px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 300ms ease-in-out;
+}
+
+.backButton:hover {
+  background-color: #0056b3;
 }

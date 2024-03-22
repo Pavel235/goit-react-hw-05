@@ -20,8 +20,6 @@ export default function MovieCast() {
     getMovieCast();
   }, [movieId]);
 
-  console.log(movieActors);
-
   return (
     <>
       <ul>

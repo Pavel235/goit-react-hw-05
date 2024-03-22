@@ -4,3 +4,11 @@
   font-size: 18px;
   color: blue;
 }
+
+.listOfMovies {
+  text-align: left;
+}
+
+.mainTopic {
+  margin-left: 25px;
+}
