@@ -24,6 +24,8 @@ export default function MoviesPage() {
   async function getListOfMovies(event) {
     event.preventDefault();
 
+    setIsLoading(false);
+
     if (inputElement.current.value.trim() === "") {
       toast.error("Please input your request!", {
         position: "top-right",
@@ -60,6 +62,7 @@ export default function MoviesPage() {
       console.error("Error while searching for movies by keyword: ", error);
     } finally {
       setInputValue("");
+      setIsLoading(true);
     }
   }
 
@@ -80,50 +83,50 @@ export default function MoviesPage() {
 
   return (
     <>
-      {!isLoading && (
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="color-ring-loading"
-          wrapperStyle={{}}
-          wrapperClass="color-ring-wrapper"
-          colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-        />
-      )}
-      {isLoading && (
-        <div>
-          <form className={styles.formElement} onSubmit={getListOfMovies}>
-            <input
-              className={styles.inputItem}
-              type="text"
-              onChange={(e) => changeValue(e.target.value)}
-              value={inputValue}
-              ref={inputElement}
-            />
-            <button className={styles.buttonElement} type="submit">
-              Search
-            </button>
-          </form>
+      <div>
+        <form className={styles.formElement} onSubmit={getListOfMovies}>
+          <input
+            className={styles.inputItem}
+            type="text"
+            onChange={(e) => changeValue(e.target.value)}
+            value={inputValue}
+            ref={inputElement}
+          />
+          <button className={styles.buttonElement} type="submit">
+            Search
+          </button>
+        </form>
 
-          <ToastContainer />
+        <ToastContainer />
 
-          <ul>
-            {moviesList &&
-              moviesList.map((movie) => (
-                <li className={styles.listItem} key={movie.id}>
-                  <NavLink
-                    className={styles.linkElement}
-                    to={`${movie.id}`}
-                    state={location}
-                  >
-                    {movie.title}
-                  </NavLink>
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
+        {!isLoading && (
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        )}
+
+        <ul>
+          {moviesList &&
+            isLoading &&
+            moviesList.map((movie) => (
+              <li className={styles.listItem} key={movie.id}>
+                <NavLink
+                  className={styles.linkElement}
+                  to={`${movie.id}`}
+                  state={location}
+                >
+                  {movie.title}
+                </NavLink>
+              </li>
+            ))}
+        </ul>
+      </div>
     </>
   );
 }
