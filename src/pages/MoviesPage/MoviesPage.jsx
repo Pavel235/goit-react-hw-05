@@ -18,8 +18,6 @@ export default function MoviesPage() {
   async function getListOfMovies(event) {
     event.preventDefault();
 
-    setIsLoading(false);
-
     if (inputElement.current.value.trim() === "") {
       toast.error("Please input your request!", {
         position: "top-right",
@@ -33,53 +31,43 @@ export default function MoviesPage() {
         transition: Bounce,
       });
 
-      setIsLoading(true);
       return;
     }
-    try {
-      params.set("query", inputValue);
-      setParams(params);
 
-      const data = await getMovies(inputValue);
-      setMoviesList(data);
-
-      if (data.length === 0) {
-        toast.info("Unfortunately, there are no movies for this request!", {
-          position: "top-right",
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }
-    } catch (error) {
-      console.error("Error while searching for movies by keyword: ", error);
-    } finally {
-      setInputValue("");
-      setIsLoading(true);
+    if (moviesList.length === 0) {
+      toast.info("Unfortunately, there are no movies for this request!", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
+
+    setInputValue("");
   }
 
   useEffect(() => {
     async function getInputValue() {
-      setIsLoading(false);
+      setIsLoading(true);
 
       try {
+        setParams({ query: inputValue });
         const data = await getMovies(value);
         setMoviesList(data);
       } catch (error) {
         console.error("Error while searching for movies:", error);
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
     }
 
     getInputValue();
-  }, [value]);
+  }, [value, inputValue, setParams]);
 
   return (
     <>
@@ -99,7 +87,7 @@ export default function MoviesPage() {
 
         <ToastContainer />
 
-        {!isLoading && (
+        {isLoading && (
           <ColorRing
             visible={true}
             height="80"
@@ -113,7 +101,7 @@ export default function MoviesPage() {
 
         <ul>
           {moviesList &&
-            isLoading &&
+            !isLoading &&
             moviesList.map((movie) => (
               <li className={styles.listItem} key={movie.id}>
                 <NavLink
