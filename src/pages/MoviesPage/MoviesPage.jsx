@@ -15,12 +15,6 @@ export default function MoviesPage() {
   const value = params.get("query") ?? "";
   const [isLoading, setIsLoading] = useState(false);
 
-  const changeValue = (newValue) => {
-    params.set("query", newValue);
-    setParams(params);
-    setInputValue(newValue);
-  };
-
   async function getListOfMovies(event) {
     event.preventDefault();
 
@@ -38,10 +32,14 @@ export default function MoviesPage() {
         theme: "light",
         transition: Bounce,
       });
+
+      setIsLoading(true);
       return;
     }
     try {
-      const inputValue = inputElement.current.value;
+      params.set("query", inputValue);
+      setParams(params);
+
       const data = await getMovies(inputValue);
       setMoviesList(data);
 
@@ -68,6 +66,8 @@ export default function MoviesPage() {
 
   useEffect(() => {
     async function getInputValue() {
+      setIsLoading(false);
+
       try {
         const data = await getMovies(value);
         setMoviesList(data);
@@ -79,7 +79,7 @@ export default function MoviesPage() {
     }
 
     getInputValue();
-  }, []);
+  }, [value]);
 
   return (
     <>
@@ -88,7 +88,7 @@ export default function MoviesPage() {
           <input
             className={styles.inputItem}
             type="text"
-            onChange={(e) => changeValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
             ref={inputElement}
           />
