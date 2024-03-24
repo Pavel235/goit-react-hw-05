@@ -15,7 +15,7 @@ export default function MoviesPage() {
   const value = params.get("query") ?? "";
   const [isLoading, setIsLoading] = useState(false);
 
-  async function getListOfMovies(event) {
+  function getListOfMovies(event) {
     event.preventDefault();
 
     if (inputElement.current.value.trim() === "") {
@@ -34,19 +34,7 @@ export default function MoviesPage() {
       return;
     }
 
-    if (moviesList.length === 0) {
-      toast.info("Unfortunately, there are no movies for this request!", {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    }
+    setParams({ query: inputValue });
 
     setInputValue("");
   }
@@ -56,9 +44,22 @@ export default function MoviesPage() {
       setIsLoading(true);
 
       try {
-        setParams({ query: inputValue });
         const data = await getMovies(value);
         setMoviesList(data);
+
+        if (data.length === 0 && moviesList !== null) {
+          toast.info("Unfortunately, there are no movies for this request!", {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        }
       } catch (error) {
         console.error("Error while searching for movies:", error);
       } finally {
@@ -67,7 +68,7 @@ export default function MoviesPage() {
     }
 
     getInputValue();
-  }, [value, inputValue, setParams]);
+  }, [value]);
 
   return (
     <>
