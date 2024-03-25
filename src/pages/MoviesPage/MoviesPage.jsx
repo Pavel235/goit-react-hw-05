@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { getMovies } from "../../movies-api";
-import { NavLink, useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import styles from "./MoviesPage.module.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ColorRing } from "react-loader-spinner";
+import MovieList from "../../components/MovieList/MovieList";
 
 export default function MoviesPage() {
   const inputElement = useRef();
   const [moviesList, setMoviesList] = useState(null);
-  const location = useLocation();
   const [params, setParams] = useSearchParams();
   const [inputValue, setInputValue] = useState("");
   const value = params.get("query") ?? "";
@@ -100,21 +100,7 @@ export default function MoviesPage() {
           />
         )}
 
-        <ul>
-          {moviesList &&
-            !isLoading &&
-            moviesList.map((movie) => (
-              <li className={styles.listItem} key={movie.id}>
-                <NavLink
-                  className={styles.linkElement}
-                  to={`${movie.id}`}
-                  state={location}
-                >
-                  {movie.title}
-                </NavLink>
-              </li>
-            ))}
-        </ul>
+        {moviesList && !isLoading && <MovieList films={moviesList} />}
       </div>
     </>
   );
